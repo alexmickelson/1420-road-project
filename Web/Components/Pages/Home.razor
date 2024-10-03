@@ -2,51 +2,140 @@
 
 <PageTitle>Home</PageTitle>
 
-
+@*
 <table>
-  <tr>
-    <td>
-      <img src="/bus.svg" height="100" />
-    </td>
-    <td>
-    </td>
-    <td>
-    </td>
-    <td>
-    </td>
-    <td>
-    </td>
-    <td>
-    </td>
-  </tr>
-  <tr>
-    <td>
-    </td>
-    <td>
-      <img src="/car.svg" height="100" />
-    </td>
-    <td>
-    </td>
-    <td>
-    </td>
-    <td>
-    </td>
-    <td>
-    </td>
-  </tr>
-  <tr>
-    <td>
-    </td>
-    <td>
-    </td>
-    <td>
-      <img src="/fire-truck.svg" height="100" />
-    </td>
-    <td>
-    </td>
-    <td>
-    </td>
-    <td>
-    </td>
-  </tr>
-</table>
+<tr>
+<td>
+<img src="/bus.svg" height="100" />
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td>
+<img src="/car.svg" height="100" />
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td>
+</td>
+<td>
+<img src="/fire-truck.svg" height="100" />
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+</table> *@
+
+@if (road == null)
+{
+  <div>
+  rows: <input @bind=rowsInput />
+</div>
+  <div>
+    columns: <input @bind=colsInput />
+  </div>
+  <button @onclick=CreateRoad>Create Road</button>
+}
+else
+{
+  <table>
+  @foreach (IVehicle[] row in road.Vehicles)
+    {
+      <tr>
+        @foreach (IVehicle vehicle in row)
+        {
+          <td>
+            @if (vehicle != null)
+            {
+              <img src=@vehicle.GetImagePath() height="100" />
+            }
+          </td>
+        }
+      </tr>
+    }
+  </table>
+
+  <div>
+    Set a Car
+
+    <div>
+      row: <input @bind=vehicleRowInput />
+    </div>
+    <div>
+      column: <input @bind=vehicleColumnInput />
+    </div>
+    <button @onclick=@(() => SetVehicle("Car"))>Set Car</button>
+    <button @onclick=@(() => SetVehicle("Bus"))>Set Bus</button>
+    <button @onclick=@(() => SetVehicle("FireTruck"))>Set FireTruck</button>
+    <button @onclick=@(() => SetVehicle("Taxi"))>Set Taxi</button>
+  </div>
+}
+
+
+@code {
+  string rowsInput = "";
+  string colsInput = "";
+  string vehicleRowInput = "";
+  string vehicleColumnInput = "";
+  Road road = null;
+
+  private void CreateRoad()
+  {
+    if (int.TryParse(rowsInput, out int rows) && int.TryParse(colsInput, out int cols))
+    {
+      road = new Road(rows, cols);
+    }
+  }
+
+  private void SetVehicle(string vehicleType)
+  {
+    if (int.TryParse(rowsInput, out int row) && int.TryParse(colsInput, out int col))
+    {
+
+      if (vehicleType == "Car")
+      {
+        road.SetVehicle(row, col, new Car());
+      }
+
+      if (vehicleType == "Bus")
+      {
+        road.SetVehicle(row, col, new Bus());
+      }
+
+      if (vehicleType == "FireTruck")
+      {
+        road.SetVehicle(row, col, new FireTruck());
+      }
+
+      if (vehicleType == "Taxi")
+      {
+        road.SetVehicle(row, col, new Taxi());
+      }
+    }
+  }
+}
