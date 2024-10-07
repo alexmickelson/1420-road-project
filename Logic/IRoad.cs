@@ -1,6 +1,5 @@
 public interface IRoad
 {
-
   public int RowCount { get; }
   public int ColCount { get; }
 
