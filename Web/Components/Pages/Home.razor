@@ -2,55 +2,6 @@
 
 <PageTitle>Home</PageTitle>
 
-@*
-<table>
-<tr>
-<td>
-<img src="/bus.svg" height="100" />
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-</td>
-<td>
-<img src="/car.svg" height="100" />
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-</td>
-<td>
-</td>
-<td>
-<img src="/fire-truck.svg" height="100" />
-</td>
-<td>
-</td>
-<td>
-</td>
-<td>
-</td>
-</tr>
-</table> *@
-
 @if (road == null)
 {
   <div>
@@ -114,7 +65,7 @@ else
 
   private void SetVehicle(string vehicleType)
   {
-    if (int.TryParse(rowsInput, out int row) && int.TryParse(colsInput, out int col))
+    if (int.TryParse(vehicleRowInput, out int row) && int.TryParse(vehicleColumnInput, out int col))
     {
 
       if (vehicleType == "Car")
